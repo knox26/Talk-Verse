@@ -13,12 +13,10 @@ import { useThemeStore } from "./store/useThemeStore.js";
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
-  const {theme}=useThemeStore();
+  const { theme } = useThemeStore();
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
-
-  console.log("from app jsx-->", authUser);
 
   if (isCheckingAuth && !authUser) {
     return (
@@ -29,7 +27,7 @@ function App() {
   }
 
   return (
-    <div data-theme={theme} >
+    <div data-theme={theme}>
       <Navbar />
       <Routes>
         <Route
