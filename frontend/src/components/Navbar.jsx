@@ -10,8 +10,8 @@ function Navbar() {
       className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 
   backdrop-blur-lg bg-base-100/80"
     >
-      <div className="container mx-auto px-4 h-16">
-        <div className="flex justify-between items-center h-full">
+      <div className=" mx-auto px-4 h-16">
+        <div className=" mx-2 flex justify-between items-center h-full">
           <div className="flex items-center gap-8">
             <Link
               to="/"

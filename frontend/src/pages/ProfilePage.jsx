@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore.js";
-import { Camera, Mail, User } from "lucide-react";
+import { Camera, Mail, User, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function ProfilePage() {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
@@ -22,10 +23,18 @@ function ProfilePage() {
   };
 
   return (
-    <div className=" h-full pt-20">
-      <div className=" max-w-xl mx-auto p-4 ">
-        <div className="bg-base-300 rounded-xl p-4 px-6 space-y-8 ">
+    <div className=" h-full pt-20 ">
+      <div className=" max-w-xl mx-auto p-1 ">
+        <div className="bg-base-300 rounded-xl pb-2 pt-4 px-6 space-y-8 ">
           <div className="text-center">
+            <div className="flex items-center  justify-end">
+              <Link
+                to="/"
+                className="flex items-center gap-2.5 hover:opacity-80 transition-all"
+              >
+                <X className="size-5 text-base-content/70" />
+              </Link>
+            </div>
             <h1 className="text-2xl font-semibold">Profile</h1>
             <p className="mt-1">Your profile information</p>
           </div>

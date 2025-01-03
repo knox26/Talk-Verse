@@ -23,11 +23,13 @@ function Sidebar() {
   }
 
   return (
-    <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
-      <div className="border-b border-base-300 w-full p-5">
-        <div className="flex items-center gap-2">
-          <Users className="size-6" />
-          <span className="font-medium hidden lg:block">Contacts</span>
+    <aside className="h-full w-12 xs:w-14 sm:w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
+      <div className="border-b border-base-300 w-full p-5  ">
+        <div className="flex items-center justify-center lg:justify-start gap-2 size-6 w-full ">
+          <div className="flex items-center gap-2 size-6">
+            <Users className=" size-5 sm:size-6" />
+            <span className="font-medium hidden lg:block">Contacts</span>
+          </div>
         </div>
         {/* TODO: Online filter toggle */}
         <div className="mt-3 hidden lg:flex items-center gap-2">
@@ -46,17 +48,17 @@ function Sidebar() {
         </div>
       </div>
 
-      <div className="overflow-y-auto w-full py-3">
+      <div className="overflow-y-auto w-full ">
         {filteredUsers.map((user) => (
           <button
             key={user._id}
             onClick={() => setSelectedUser(user)}
             className={`
             w-full p-3 flex items-center gap-3
-            hover:bg-base-300 transition-colors
+            hover:bg-base-300 hover:rounded-md transition-colors
             ${
               selectedUser?._id === user._id
-                ? "bg-base-300 ring-1 ring-base-300"
+                ? "bg-base-300 ring-1 ring-base-300 rounded-xl"
                 : ""
             }
           `}
@@ -65,7 +67,7 @@ function Sidebar() {
               <img
                 src={user.profilePic || "/avatar.png"}
                 alt={user.name}
-                className="size-12 object-cover rounded-full"
+                className="  size-8 sm:size-11 object-cover rounded-full"
               />
               {onlineUsers.includes(user._id) && (
                 <span
