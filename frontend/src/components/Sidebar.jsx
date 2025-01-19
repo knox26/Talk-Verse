@@ -5,7 +5,7 @@ import SidebarSkeleton from "./skeletons/SidebarSkeleton.jsx";
 import { Plus, User, Users } from "lucide-react";
 import CreateGroup from "./sidebar-component/CreateGroup.jsx";
 import { useGroupChatStore } from "../store/useGroupChatStore.js";
-import { set } from "mongoose";
+
 
 function Sidebar() {
   const {
