@@ -2,9 +2,12 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
+import { useGroupChatStore } from "./useGroupChatStore.js";
 
 const BASE_URL =
   import.meta.env.MODE === "development" ? "http://localhost:5001" : "/";
+
+const { setSelectedGroup } = useGroupChatStore.getState();
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -83,6 +86,21 @@ export const useAuthStore = create((set, get) => ({
       console.log("updateProfile error in authStore.js", error.message);
     } finally {
       set({ isUpdatingProfile: false });
+    }
+  },
+
+  updateGroupProfile: async (formData) => {
+    console.log("updateGroupProfile formData");
+    try {
+      const response = await axiosInstance.put(
+        "/auth/update-group-profile",
+        formData
+      );
+      console.log("updateGroupProfile response", response.data);
+      setSelectedGroup(response.data);
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      console.log("updateGroupProfile error in authStore.js", error.message);
     }
   },
 

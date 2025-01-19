@@ -1,9 +1,8 @@
 import cloudinary from "../db/cloudinary.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user-model.js";
+import UserGroup from "../models/user-group-model.js";
 import bcrypt from "bcryptjs";
-
-
 
 export const signup = async (req, res) => {
   try {
@@ -129,6 +128,36 @@ export const checkAuth = (req, res) => {
     res.status(200).json(req.user);
   } catch (error) {
     console.log("Error in checkAuth controller", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const updateGroupProfile = async (req, res) => {
+  try {
+    const { profilePic, id } = req.body;
+    const groupId = id;
+    // Check if profile picture is provided
+    if (!profilePic) {
+      return res.status(400).json({ message: "Profile picture is required" });
+    }
+
+    const uploadResponse = await cloudinary.uploader.upload(profilePic);
+    if (!uploadResponse) {
+      return res.status(400).json({ message: "Profile picture upload failed" });
+    }
+    const group = await UserGroup.findById(groupId);
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+    const updatedUser = await UserGroup.findByIdAndUpdate(
+      groupId,
+      { coverImage: uploadResponse.secure_url },
+      { new: true }
+    );
+    console.log(updatedUser);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log("Error in updateProfile controller", error.message);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

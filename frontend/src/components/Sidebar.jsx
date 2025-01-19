@@ -6,7 +6,6 @@ import { Plus, User, Users } from "lucide-react";
 import CreateGroup from "./sidebar-component/CreateGroup.jsx";
 import { useGroupChatStore } from "../store/useGroupChatStore.js";
 
-
 function Sidebar() {
   const {
     getUsers,
@@ -173,7 +172,7 @@ function Sidebar() {
             >
               <div className=" mx-auto lg:mx-0">
                 <img
-                  src={group.profilePic || "/group.png"}
+                  src={group.coverImage || "/group.png"}
                   alt={group.name}
                   className="  size-8 sm:size-11 object-cover rounded-full"
                 />

@@ -6,6 +6,7 @@ import {
   logout,
   signup,
   updateProfile,
+  updateGroupProfile,
 } from "../controllers/auth-controller.js";
 
 const router = express.Router();
@@ -15,6 +16,7 @@ router.post("/login", login);
 router.post("/logout", logout);
 
 router.put("/update-profile", protectRoute, updateProfile);
+router.put("/update-group-profile", protectRoute, updateGroupProfile);
 
 router.get("/check", protectRoute, checkAuth);
 
