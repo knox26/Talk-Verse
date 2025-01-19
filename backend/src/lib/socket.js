@@ -16,6 +16,16 @@ export function getRecieverSocketId(userId) {
   return userSocketMap[userId];
 }
 
+export function getMembersSocketId(members) {
+  const socketIds = [];
+  members.forEach((member) => {
+    if (userSocketMap[member]) {
+      socketIds.push(userSocketMap[member]);
+    }
+  });
+  return socketIds;
+}
+
 //used to store user id and socket id
 const userSocketMap = {};
 

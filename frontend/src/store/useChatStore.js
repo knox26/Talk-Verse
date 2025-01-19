@@ -9,6 +9,8 @@ export const useChatStore = create((set, get) => ({
   selectedUser: null,
   isUserLoading: false,
   isMessagesLoading: false,
+  isDownloading: false,
+  selectedChatType:null,
 
   getUsers: async () => {
     set({ isUserLoading: true });
@@ -25,7 +27,7 @@ export const useChatStore = create((set, get) => ({
   getMessages: async (userId) => {
     set({ isMessagesLoading: true });
     try {
-      const res = await axiosInstance.get(`/messages/${userId}`);
+      const res = await axiosInstance.get(`/messages/get-messages/${userId}`);
       set({ messages: res.data });
     } catch (error) {
       toast.error("Failed to fetch messages");
@@ -47,8 +49,27 @@ export const useChatStore = create((set, get) => ({
     }
   },
 
-  setSelectedUser: (user) => {
-    set({ selectedUser: user });
+  downloadImage: async (url) => {
+    set({ isDownloading: true });
+
+    try {
+      const response = await axiosInstance.get(url, {
+        responseType: "blob",
+        withCredentials: true,
+      });
+      const urlBlob = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = urlBlob;
+      link.setAttribute("download", url.split("/").pop()); // Use the file name from the URL
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(urlBlob);
+    } catch (error) {
+      console.error("File download failed:", error);
+    } finally {
+      set({ isDownloading: false });
+    }
   },
 
   subscribeToMessages: () => {
@@ -66,4 +87,13 @@ export const useChatStore = create((set, get) => ({
     const socket = useAuthStore.getState().socket;
     socket.off("newMessage");
   },
+
+  // setter functions
+  setSelectedUser: (user) => {
+    set({ selectedUser: user });
+  },
+
+  setIsDownloading: (value) => set({ isDownloading: value }),
+
+  setSelectedChatType:(type)=>set({selectedChatType:type})
 }));

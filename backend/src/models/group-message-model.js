@@ -1,18 +1,26 @@
-
 import mongoose from "mongoose";
 
-const messageSchema = new mongoose.Schema(
+const groupMessageSchema = new mongoose.Schema(
   {
+    groupId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserGroup",
+      required: true,
+    },
     senderId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    recieverId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+    senderPic: {
+      type: String,
       required: true,
     },
+    senderName: {
+      type: String,
+      required: true,
+    }
+    ,
     text: {
       type: String,
     },
@@ -26,6 +34,6 @@ const messageSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Message = mongoose.model("Message", messageSchema);
+const GroupMessage = mongoose.model("groupMessage", groupMessageSchema);
 
-export default Message;
+export default GroupMessage;

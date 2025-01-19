@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useChatStore } from "../store/useChatStore";
+import { useGroupChatStore } from "../store/useGroupChatStore";
 import { Image, Send, X } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -13,7 +14,9 @@ const MessageInput = () => {
   });
 
   const fileInputRef = useRef(null);
-  const { sendMessage } = useChatStore();
+  
+  const { sendMessage , selectedChatType } = useChatStore();
+const { sendGroupMessage } = useGroupChatStore();
   const [imagePreview, setImagePreview] = useState(null);
 
   const handleImageChange = (e, onChange) => {
@@ -42,11 +45,17 @@ const MessageInput = () => {
 
     try {
       const imageBase64 = imagePreview || null; // Optional: Convert file to base64 or handle as needed
-      await sendMessage({
-        text: data.text.trim(),
-        image: imageBase64,
-      });
-
+      if(selectedChatType === "contact"){
+        await sendMessage({
+          text: data.text.trim(),
+          image: imageBase64,
+        });}
+      if(selectedChatType === "group"){
+        await sendGroupMessage({
+          text: data.text.trim(),
+          image: imageBase64,
+        });
+      }
       // Reset form
       reset();
       setImagePreview(null);
